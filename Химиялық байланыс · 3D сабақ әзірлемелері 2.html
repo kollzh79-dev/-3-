@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="kk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Химиялық байланыс · 3D сабақ әзірлемелері</title>
+<style>
+:root{--bg:#f5f6fb;--fg:#1b2236;--card:#fff;--mut:#5a6479;--ac:#4f46e5;--ac2:#0d9488;--bd:#e1e5f0;--hd:#fffffff2;--ok:#16a34a;--bad:#dc2626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1320;--fg:#e8ebf5;--card:#181d2e;--mut:#9aa4bd;--ac:#8b85ff;--ac2:#2dd4bf;--bd:#2a3150;--hd:#0f1320f2}}
+:root[data-theme="dark"]{--bg:#0f1320;--fg:#e8ebf5;--card:#181d2e;--mut:#9aa4bd;--ac:#8b85ff;--ac2:#2dd4bf;--bd:#2a3150;--hd:#0f1320f2}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 56px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--hd);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--hd);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd);padding:8px 12px}
+header b{display:block;font-size:15px}nav{display:flex;gap:6px;overflow-x:auto;padding-top:6px;scrollbar-width:none}
+nav a{white-space:nowrap;padding:5px 12px;border-radius:99px;text-decoration:none;color:var(--fg);border:1px solid var(--bd);font-size:14px}
+nav a.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{max-width:980px;margin:0 auto;padding:14px}.pg{display:none}.pg.on{display:block}
+.hero{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-radius:18px;padding:20px;margin-bottom:14px}
+.hero h1{margin:6px 0;font-size:26px;line-height:1.2}.hero p{margin:6px 0;opacity:.95}
+.badge{background:#fff3;padding:2px 10px;border-radius:99px;font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.chip{background:#fff;color:#27308a;text-decoration:none;padding:4px 11px;border-radius:99px;font-size:13px;font-weight:600}
+.prog{height:8px;background:#fff4;border-radius:9px;margin-top:12px;overflow:hidden}.prog i{display:block;height:100%;width:0;background:#fff;transition:width .3s}
+.step,.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:14px}
+.step h2{margin:0 0 8px;font-size:19px;display:flex;gap:9px;align-items:center}.step h2 b{background:var(--ac);color:#fff;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:14px;flex:none}
+h3{margin:12px 0 6px;font-size:16px}.mut{color:var(--mut);font-size:14px}
+.ck{display:flex;gap:9px;align-items:flex-start;padding:6px 0}.ck input{margin-top:5px;width:18px;height:18px;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.card a.go{color:var(--ac);font-weight:600;text-decoration:none}
+.vw canvas{width:100%;height:300px;background:radial-gradient(circle at 50% 40%,#2a3566,#10152b);border-radius:12px;display:block;touch-action:pan-y;cursor:grab}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.tabs button,.btn,.pal button,.pre button{border:1px solid var(--bd);background:var(--card);color:var(--fg);padding:6px 12px;border-radius:10px;font:inherit;font-size:14px;cursor:pointer}
+.tabs button.on,.pal button.on{background:var(--ac);color:#fff;border-color:var(--ac)}.btn{background:var(--ac);color:#fff;border-color:var(--ac)}
+.cap{font-size:13px;color:var(--mut);margin:6px 0 0}
+.q p{margin:8px 0 4px}textarea{width:100%;min-height:58px;border:1px solid var(--bd);border-radius:10px;padding:8px;background:var(--bg);color:var(--fg);font:inherit}
+.phys{border-left:4px solid var(--ac2);background:color-mix(in srgb,var(--ac2) 10%,transparent);padding:10px 12px;border-radius:10px;margin:10px 0}.phys .btn{margin:6px 6px 0 0}
+.wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:480px}td,th{border:1px solid var(--bd);padding:6px;text-align:left;font-size:14px}
+select,input.chk{font:inherit;font-size:14px;padding:4px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--fg);max-width:100%}input.chk{width:70px}
+.ok{outline:2px solid var(--ok)}.bad{outline:2px solid var(--bad)}.res{margin-left:8px;font-weight:600}
+.bar{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:14px}.bar span{width:60px}.bar i{display:block;height:20px;background:var(--ac2);border-radius:5px}.bar i.w{background:var(--ac)}
+.lab{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:800px){.lab{grid-template-columns:1.6fr 1fr}}
+#labcv{width:100%;height:420px;background:radial-gradient(circle at 50% 40%,#2a3566,#10152b);border-radius:14px;touch-action:none;cursor:grab}
+.pal,.pre,.row{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}#info{background:var(--bg);border-radius:10px;padding:10px;font-size:14px;margin-top:8px}
+.rf label{display:block;margin-top:8px}.rf input[type=range]{width:75%}.chips2 button{margin:3px}.chips2 button.on{background:var(--ac);color:#fff}
+svg text{fill:currentColor;font-size:13px}
+.stg{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.stg span{flex:1 1 130px;background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:8px;font-size:13px}.stg b{display:block;color:var(--ac);font-size:14px}
+.tk{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:10px}.tk p{margin:6px 0}.tk .st,.tk .fm,.tk .ls{display:inline-block;font-size:12px;padding:2px 9px;border-radius:99px;margin-right:4px}.tk .st{background:var(--ac);color:#fff}.tk .fm{background:var(--ac2);color:#fff}.tk .ls{border:1px solid var(--bd);color:var(--mut)}.tk a{color:var(--ac);font-weight:600;text-decoration:none;font-size:14px;margin-right:8px}.fl{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.sk{font-size:14px;background:var(--bg);border-radius:10px;padding:8px 10px;color:var(--mut)!important}.sk b{color:var(--fg)}.fl button.on{background:var(--ac);color:#fff}
+#grpimg svg{width:100%;height:auto;border-radius:12px;display:block;border:1px solid var(--bd)}
+</style></head><body>
+<header><b>⚗ Химиялық байланыс типтері · 3D сабақ әзірлемелері</b><nav id="nav"></nav></header>
+<main id="app"></main>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+/* ===== 3D деректер ===== */
+const EL={H:['#eef2f7',.3],C:['#5b6270',.45],N:['#3b6fe0',.45],O:['#e0443b',.45],F:['#4cc46a',.4],Cl:['#2fb34a',.55],Na:['#9b6be0',.6],Cs:['#d9a23a',.7],Be:['#b9d45a',.45],B:['#e3a07a',.42],P:['#e08a2a',.5],S:['#e6d43a',.55],I:['#8a46c0',.65],Cu:['#c8793a',.55],Si:['#8aa0b8',.55],Ca:['#7ed0c0',.6],Mg:['#6fbf6f',.55],LP:['rgba(168,85,247,.4)',.8]};
+const nv=v=>{const l=Math.hypot(...v);return v.map(a=>a/l)};
+const T=[[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]].map(nv);
+const D=(p,q)=>Math.hypot(p[1]-q[1],p[2]-q[2],p[3]-q[3]);
+function nbr(A,d,t){const B=[];for(let i=0;i<A.length;i++)for(let j=i+1;j<A.length;j++)if(Math.abs(D(A[i],A[j])-d)<.02)B.push([i,j,t||1]);return B}
+function star(c,e,dirs,L,lp,t){const A=[[c,0,0,0]],B=[];dirs.forEach((d,i)=>{A.push([e,...d.map(a=>a*L)]);B.push([0,i+1,t||1])});(lp||[]).forEach(d=>A.push(['LP',...nv(d).map(a=>a*.7)]));return{A,B,r:.7}}
+const sn=a=>Math.sin(a*Math.PI/180),cs=a=>Math.cos(a*Math.PI/180);
+const pyr=th=>{const s=Math.sqrt((1-cs(th))/1.5),c=Math.sqrt(1-s*s);return[0,1,2].map(k=>[s*cs(120*k),-c,s*sn(120*k)])};
+const wat=()=>[[sn(52.25),-cs(52.25),0],[-sn(52.25),-cs(52.25),0]];
+function cubic(N,a,b){const A=[];for(let i=0;i<N;i++)for(let j=0;j<N;j++)for(let k=0;k<N;k++)A.push([(i+j+k)%2?b:a,i-(N-1)/2,j-(N-1)/2,k-(N-1)/2]);return{A,B:nbr(A,1),r:.5}}
+function fcc(e,a){const A=[];for(const x of[-1,1])for(const y of[-1,1])for(const z of[-1,1])A.push([e,x*a/2,y*a/2,z*a/2]);[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].forEach(d=>A.push([e,...d.map(v=>v*a/2)]));return A}
+const MOD={
+NaCl:{n:'NaCl',d:'Na⁺ (күлгін) және Cl⁻ (жасыл) иондары. Әр ионды 6 қарсы ион қоршайды: 6:6, октаэдрлік координация.',m:()=>cubic(3,'Na','Cl')},
+MgO:{n:'MgO',d:'NaCl типті тор: Mg²⁺ және O²⁻, координациялық сан 6:6.',m:()=>cubic(3,'Mg','O')},
+CsCl:{n:'CsCl',d:'Орталықтағы Cs⁺ ионын 8 Cl⁻ қоршайды: 8:8, кубтық координация.',m:()=>{const A=[['Cs',0,0,0]];for(const x of[-1,1])for(const y of[-1,1])for(const z of[-1,1])A.push(['Cl',x*.8,y*.8,z*.8]);const B=[];for(let i=1;i<9;i++)B.push([0,i,1]);nbr(A.slice(1),1.6,'e').forEach(b=>B.push([b[0]+1,b[1]+1,'e']));return{A,B,r:.9}}},
+CaF2:{n:'CaF₂ (флюорит)',d:'Ca²⁺ (жасыл-көгілдір) жиынтығы бетті-центрленген куб, F⁻ иондары тетраэдрлік қуыста: Ca²⁺ КС = 8, F⁻ КС = 4.',m:()=>{const A=fcc('Ca',1.4);for(const x of[-1,1])for(const y of[-1,1])for(const z of[-1,1])A.push(['F',x*.35,y*.35,z*.35]);return{A,B:nbr(A,.606),r:.5}}},
+BeCl2:{n:'BeCl₂ · AX₂',d:'AX₂ — сызықтық, ∠ 180°.',m:()=>star('Be','Cl',[[1,0,0],[-1,0,0]],1.6)},
+BF3:{n:'BF₃ · AX₃',d:'AX₃ — тригональды жазық, ∠ 120°.',m:()=>star('B','F',[0,1,2].map(k=>[cs(120*k),0,sn(120*k)]),1.4)},
+CH4:{n:'CH₄ · AX₄',d:'AX₄ — тетраэдр, ∠ 109,5°.',m:()=>star('C','H',T,1.2)},
+NH3:{n:'NH₃ · AX₃E',d:'AX₃E — үшбұрышты пирамида, ∠ 107,3°. Күлгін бұлт — бөлінбеген жұп (E).',m:()=>star('N','H',pyr(107.3),1.1,[[0,1,0]])},
+H2O:{n:'H₂O · AX₂E₂',d:'AX₂E₂ — бұрыштық, ∠ 104,5°. Екі бөлінбеген жұп (E) байланыстарды қатты итереді.',m:()=>star('O','H',wat(),1.1,[[0,.55,.83],[0,.55,-.83]])},
+PCl5:{n:'PCl₅ · AX₅',d:'Тригональды бипирамида: ∠ 90° және 120°.',m:()=>star('P','Cl',[[0,1,0],[0,-1,0],...[0,1,2].map(k=>[cs(120*k),0,sn(120*k)])],1.7)},
+SF6:{n:'SF₆ · AX₆',d:'Октаэдр: барлық көрші байланыс ∠ 90°.',m:()=>star('S','F',[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]],1.5)},
+CO2:{n:'CO₂',d:'Сызықтық молекула O=C=O, ∠ 180°. Молекулалық тор, газ.',m:()=>star('C','O',[[1,0,0],[-1,0,0]],1.3,0,2)},
+SiO2:{n:'SiO₂',d:'Атомдық тор: әр Si төрт O-мен тетраэдр жасайды, ковалентті тор → өте қатты.',m:()=>{const A=[['Si',0,0,0]],B=[];T.forEach((t,i)=>{A.push(['O',...t.map(a=>a*1.3)]);A.push(['Si',...t.map(a=>a*2.6)]);B.push([0,1+2*i,1],[1+2*i,2+2*i,1])});return{A,B,r:.6}}},
+Diamond:{n:'Алмаз (C)',d:'Атомдық тор: әр C атомы 4 көршімен тетраэдр, координациялық сан 4. Өте қатты.',m:()=>{const A=[['C',0,0,0]],B=[];T.forEach((t,i)=>{const p=t.map(a=>a*1.5);A.push(['C',...p]);B.push([0,A.length-1,1]);const pi=A.length-1;T.forEach((u,j)=>{if(j!=i){A.push(['C',p[0]-u[0]*1.5,p[1]-u[1]*1.5,p[2]-u[2]*1.5]);B.push([pi,A.length-1,1])}})});return{A,B,r:.55}}},
+I2:{n:'I₂ (молекулалық)',d:'Молекулалар арасында әлсіз Ван-дер-Ваальс күші (сызықша), сондықтан балқу температурасы төмен.',m:()=>({A:[['I',-1,-1.1,0],['I',1,-1.1,0],['I',-1,1.1,0],['I',1,1.1,0]],B:[[0,1,1],[2,3,1],[0,2,'h'],[1,3,'h']],r:.7})},
+Cu:{n:'Cu (металдық)',d:'Түйінде Cu катиондары, арасында еркін электрон газы. Бетті-центрленген куб, КС = 12.',m:()=>{const A=fcc('Cu',1.8);return{A,B:nbr(A.slice(0,8),1.8,'e'),r:.8}}},
+Ice:{n:'Мұз · (H₂O)ₙ',d:'Орталық су молекуласы төрт көрші молекуламен тетраэдрлік сутектік байланыс (көк сызықша) түзеді. Ашық құрылым → мұз судан жеңіл.',m:()=>{const A=[['O',0,0,0]],B=[];T.forEach(t=>A.push(['O',...t.map(a=>a*2.8)]));A.push(['H',...T[0].map(a=>a*.96)],['H',...T[1].map(a=>a*.96)],['H',...T[2].map(a=>a*1.84)],['H',...T[3].map(a=>a*1.84)]);B.push([0,5,1],[0,6,1],[5,1,'h'],[6,2,'h'],[3,7,1],[4,8,1],[7,0,'h'],[8,0,'h']);return{A,B,r:.5}}}
+};
+/* ===== 3D қозғалтқыш ===== */
+const all=[];
+const rot=([x,y,z],rx,ry)=>{let c=Math.cos(ry),s=Math.sin(ry);[x,z]=[x*c+z*s,-x*s+z*c];c=Math.cos(rx);s=Math.sin(rx);[y,z]=[y*c-z*s,y*s+z*c];return[x,y,z]};
+class V{constructor(cv,m){this.cv=cv;this.m=m;this.rx=.4;this.ry=.6;this.sel=[];this.auto=true;this.P=[];cv._v=this;all.push(this);
+cv.onpointerdown=e=>{this.d=1;this.mv=0;this.lx=e.clientX;this.ly=e.clientY;cv.setPointerCapture(e.pointerId)};
+cv.onpointermove=e=>{if(!this.d)return;const dx=e.clientX-this.lx,dy=e.clientY-this.ly;this.mv+=Math.abs(dx)+Math.abs(dy);this.ry+=dx*.01;this.rx+=dy*.01;this.lx=e.clientX;this.ly=e.clientY};
+cv.onpointerup=e=>{this.d=0;if(this.lab&&this.mv<6)this.pick(e)};cv.onpointercancel=()=>this.d=0}
+pick(e){const r=this.cv.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;let b=null,bd=1e9;this.P.forEach(p=>{if(p.e=='LP')return;const d=Math.hypot(p.x-x,p.y-y);if(d<p.r+10&&d<bd){bd=d;b=p.i}});if(b===null){this.sel=[];}else if(this.sel.includes(b))this.sel=this.sel.filter(i=>i!=b);else{this.sel.push(b);if(this.sel.length>2)this.sel.shift()}this.onsel&&this.onsel()}
+draw(){const cv=this.cv;if(!cv.offsetParent)return;const w=cv.clientWidth,h=cv.clientHeight,d=devicePixelRatio||1;if(cv.width!=Math.round(w*d)){cv.width=Math.round(w*d);cv.height=Math.round(h*d)}
+const g=cv.getContext('2d');g.setTransform(d,0,0,d,0,0);g.clearRect(0,0,w,h);const m=this.m,A=m.A;
+if(!A.length){g.fillStyle='#aab';g.font='14px sans-serif';g.textAlign='center';g.fillText('Элементті таңдап, «Атом қосу» батырмасын бас',w/2,h/2);return}
+if(!this.d&&this.auto)this.ry+=.008;
+const ext=Math.max(1,...A.map(a=>Math.hypot(a[1],a[2],a[3])))+.6,sc=Math.min(w,h)/2/ext*.9;
+const P=this.P=A.map((a,i)=>{const[x,y,z]=rot([a[1],a[2],a[3]],this.rx,this.ry),k=1/(1-z/(ext*6));return{x:w/2+x*sc*k,y:h/2-y*sc*k,z,k,i,e:a[0],r:(EL[a[0]]||EL.C)[1]*sc*(m.r||.6)*k}});
+const it=[];
+m.B.forEach(([i,j,t])=>{const p=P[i],q=P[j];it.push({z:(p.z+q.z)/2-.01,f:()=>{g.beginPath();g.lineCap='round';const dx=q.x-p.x,dy=q.y-p.y,l=Math.hypot(dx,dy)||1,nx=-dy/l*3.5,ny=dx/l*3.5;
+if(t=='h'){g.setLineDash([6,5]);g.lineWidth=2.5;g.strokeStyle='#38bdf8';g.moveTo(p.x,p.y);g.lineTo(q.x,q.y)}
+else if(t=='e'){g.setLineDash([]);g.lineWidth=1;g.strokeStyle='rgba(150,160,185,.5)';g.moveTo(p.x,p.y);g.lineTo(q.x,q.y)}
+else if(t==2){g.setLineDash([]);g.lineWidth=3;g.strokeStyle='#aab2c5';g.moveTo(p.x+nx,p.y+ny);g.lineTo(q.x+nx,q.y+ny);g.moveTo(p.x-nx,p.y-ny);g.lineTo(q.x-nx,q.y-ny)}
+else{g.setLineDash([]);g.lineWidth=4*Math.min(p.k,1.3);g.strokeStyle='#aab2c5';g.moveTo(p.x,p.y);g.lineTo(q.x,q.y)}g.stroke();g.setLineDash([])}})});
+P.forEach(p=>it.push({z:p.z,f:()=>{const c=(EL[p.e]||EL.C)[0];g.beginPath();g.arc(p.x,p.y,p.r,0,7);g.fillStyle=c;g.fill();if(p.e!='LP'){const gr=g.createRadialGradient(p.x-p.r*.35,p.y-p.r*.35,p.r*.05,p.x,p.y,p.r);gr.addColorStop(0,'rgba(255,255,255,.65)');gr.addColorStop(.6,'rgba(255,255,255,0)');gr.addColorStop(1,'rgba(0,0,0,.3)');g.fillStyle=gr;g.fill();if(p.r>9){g.fillStyle=['H'].includes(p.e)?'#222':'#fff';g.font='bold '+Math.max(9,p.r*.8)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(p.e,p.x,p.y)}}
+if(this.sel.includes(p.i)){g.beginPath();g.arc(p.x,p.y,p.r+3,0,7);g.lineWidth=3;g.strokeStyle='#facc15';g.stroke()}}}));
+it.sort((a,b)=>a.z-b.z).forEach(o=>o.f())}}
+(function loop(){all.forEach(v=>v.draw());requestAnimationFrame(loop)})();
+/* ===== құрастырушылар ===== */
+const lk=(a,u)=>`<a class=chip href="${u}" target=_blank rel=noopener>${a} ↗</a>`;
+const PHET=['PhET','https://phet.colorado.edu/en/simulations/molecule-shapes'],MV=['MolView','https://molview.org'],CM=['ChemMagic','https://www.google.com/search?q=ChemMagic+3D+chemistry'],TC=['Tinkercad','https://www.tinkercad.com'],CS=['ChemSpider','https://www.chemspider.com'];
+const lnk=a=>a.map(([x,u])=>`<a class=chip style="background:var(--bg);color:var(--ac);border:1px solid var(--bd)" href="${u}" target=_blank rel=noopener>${x} ↗</a>`).join(' ');
+const checks=a=>a.map(t=>`<label class=ck><input type=checkbox><span>${t}</span></label>`).join('');
+const viewer=k=>`<div class=vw><div class=tabs>${k.map((x,i)=>`<button class="${i?'':'on'}" onclick="setM(this,'${x}')">${MOD[x].n}</button>`).join('')}</div><canvas data-k="${k[0]}"></canvas><p class=cap>${MOD[k[0]].d} <i>(Сүйреп бұра — 360°)</i></p></div>`;
+function setM(b,k){const v=b.closest('.vw');v.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x==b));const c=v.querySelector('canvas');c._v.m=MOD[k].m();v.querySelector('.cap').innerHTML=MOD[k].d+' <i>(Сүйреп бұра — 360°)</i>'}
+const qs=a=>a.map(q=>`<div class=q><p>❓ <b>${q}</b></p><textarea placeholder="Болжамыңды дәптерге/осында жаз…"></textarea></div>`).join('');
+const sel=(o,a)=>`<select class=chk data-a="${a}"><option value="">—</option>${o.map(x=>`<option>${x}</option>`).join('')}</select>`;
+const inp=a=>`<input class=chk data-a="${a}" inputmode=decimal>`;
+const quiz=h=>`<div class=quiz><div class=wrap>${h}</div><button class=btn onclick=chkq(this)>Тексеру</button><span class=res></span></div>`;
+function chkq(b){const q=b.closest('.quiz'),e=q.querySelectorAll('.chk');let ok=0;e.forEach(x=>{const v=x.value.trim().toLowerCase().replace(',','.'),g=v==x.dataset.a.toLowerCase();x.classList.toggle('ok',g);x.classList.toggle('bad',!g&&!!v);ok+=g});q.querySelector('.res').textContent=`${ok}/${e.length} дұрыс`+(ok==e.length?' 🎉':'')}
+const phys=(tool,ks)=>`<div class=phys><b>🧩 Нақты құрал: ${tool}.</b> Негізгі әзірлемеде осы құрал қолданылады, бірақ оның виртуалды нұсқасын оқушыларға ұсынуға болады.<br>${ks.map(k=>`<button class=btn onclick="openLab('${k}')">Виртуалды: ${MOD[k].n}</button>`).join('')}</div>`;
+const refl=(name,a)=>`<div class=rf><p class=mut>«${name}» рефлексиясы</p>${a.map(([t,l,o])=>t=='t'?`<label>${l}<textarea></textarea></label>`:t=='r'?`<label>${l}: <output>5</output><br><input type=range min=1 max=10 value=5 oninput="this.previousElementSibling.previousElementSibling.textContent=this.value"></label>`:`<label>${l}<div class=chips2>${o.map(x=>`<button class=btn style="background:var(--card);color:var(--fg)" onclick="this.classList.toggle('on')">${x}</button>`).join('')}</div></label>`).join('')}</div>`;
+const svgWedge=`<svg viewBox="0 0 220 140" width="220" style="max-width:100%"><g stroke="currentColor" stroke-width="2.5" fill="none"><line x1="110" y1="70" x2="110" y2="18"/><line x1="110" y1="70" x2="62" y2="104"/><line x1="110" y1="70" x2="128" y2="130" stroke-dasharray="5 4"/></g><polygon points="110,70 176,90 170,108" fill="currentColor"/><text x="104" y="14">H</text><text x="46" y="116">H</text><text x="120" y="138">H</text><text x="176" y="106">H</text><text x="104" y="76" font-weight="bold">C</text></svg>`;
+const bars=[['H₂O',100],['H₂S',-60],['H₂Se',-41],['H₂Te',-2]].map(([n,v])=>`<div class=bar><span>${n}</span><i class="${v>0?'w':''}" style="width:${(v+80)/1.8*.65}%"></i><b>${v} °C</b></div>`).join('');
+/* ===== топқа бөлу суреті ===== */
+function groupSVG(){const G=[['#dc2626','#fee2e2','Катиондар','Na⁺ · Ca²⁺ · Cs⁺','Электрон беретін атомдар','Na⁺'],['#d97706','#fef3c7','Аниондар','Cl⁻ · F⁻ · O²⁻','Электрон алатын атомдар','Cl⁻'],['#16a34a','#dcfce7','Кристалдар','NaCl · CsCl · CaF₂','Иондардан құралған тор','NaCl']];
+const c=G.map((g,i)=>`<g transform="translate(${20+i*240},20)"><rect width="220" height="300" rx="22" fill="${g[1]}" stroke="${g[0]}" stroke-width="4"/><g transform="translate(110,100)"><path d="M-16,-70 h32 v38 l44,78 q10,20 -12,20 h-96 q-22,0 -12,-20 l44,-78 z" fill="#fff" stroke="${g[0]}" stroke-width="5" stroke-linejoin="round"/><path d="M-36,8 h72 l24,38 q10,20 -12,20 h-96 q-22,0 -12,-20 z" fill="${g[0]}" opacity=".85"/><circle cx="-10" cy="-14" r="5" fill="${g[0]}" opacity=".5"/><circle cx="8" cy="-30" r="4" fill="${g[0]}" opacity=".4"/><text y="46" font-size="22" font-weight="bold" fill="#fff">${g[5]}</text></g><text x="110" y="222" font-size="27" font-weight="bold" fill="${g[0]}">${g[2]}</text><text x="110" y="250" font-size="16" fill="#334155">${g[3]}</text><text x="110" y="276" font-size="13" fill="#64748b">${g[4]}</text></g>`).join('');
+return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 360" width="1480" height="720" font-family="system-ui,Segoe UI,Arial,sans-serif" text-anchor="middle"><rect width="740" height="360" fill="#fff"/>${c}<text x="370" y="346" font-size="15" fill="#475569">Колба-карточканың түсін таңда — тобыңды тап!</text></svg>`}
+function grpBlock(){return `<h3>Топқа бөлу — көрнекілік</h3><div id=grpimg>${groupSVG()}</div><div class=row><button class=btn onclick="dl('png')">⬇ PNG жүктеу</button><button class=btn onclick="dl('svg')">⬇ SVG жүктеу</button></div><p class=mut>Сурет тақтада көрсетуге немесе карточка ретінде басып шығаруға арналған.</p>`}
+async function dl(f){let D=null;try{D=await claude.use('downloads')}catch(e){}if(!D){alert('Жүктеу бұл көріністе қолжетімсіз. Суретті скриншот арқылы сақтаңыз.');return}const s=groupSVG();try{if(f=='svg')await D.save({filename:'topka-bolu-kolba-kartochkalar.svg',data:s});else{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=1480;c.height=720;c.getContext('2d').drawImage(im,0,0,1480,720);c.toBlob(b=>D.save({filename:'topka-bolu-kolba-kartochkalar.png',data:b}).catch(()=>{}),'image/png')};im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s)}}catch(e){}}
+/* ===== тапсырмалар жүйесі ===== */
+const TS=[
+[1,'Ұйымдастыру','Топтық','Қызыл, сары, жасыл колба-карточкалар арқылы «Катиондар», «Аниондар», «Кристалдар» топтарына бөліну.'],
+[1,'Қызығушылық','Фронталды','ЖИ көмегімен жасалған ас тұзы мен флюорит 3D моделін бақыла. Тартылыс күші қандай? NaCl неліктен текше пішінді? Тақырып пен мақсатты өздігінен тұжырымда.','NaCl'],
+[1,'Зерттеу','Жеке','PhET / ChemMagic-те Na⁺ және Cl⁻ электростатикалық тартылуын 360° бұрап зертте; орталық ионды қоршаған қарсы иондарды сана (NaCl 6:6, CsCl 8:8).','CsCl'],
+[1,'Практика','Топтық','3D шарөзекті модельдер жинағымен NaCl 3D элементар ұяшығын құрастыр.','NaCl'],
+[1,'Жеке жұмыс','Жеке','Модельдің 2D проекциясы мен изометриялық бейнесін дәптерге түсір; электрондық бұлтшалар арқылы ауысу схемасын сыз.'],
+[1,'Рефлексия','Жеке','«3D Көзқарас»: кері байланыс парағында нені айқын көргеніңді және кеңістіктік елестетудегі қиындықты жаз.'],
+[1,'Үй тапсырмасы','Жеке','Tinkercad / ChemSpider-де CaF₂ немесе MgO 3D моделін зертте, координациялық сандарын сипатта.','CaF2'],
+[2,'Қызығушылық','Фронталды','BeCl₂, BF₃, CH₄, NH₃, H₂O 3D электрон бұлтшаларын бақыла. CH₄ неге тетраэдр, H₂O неге бұрышты? Мақсатты тұжырымда.','CH4'],
+[2,'Зерттеу','Жеке','PhET «Molecule Shapes» / MolView-де AX₂, AX₃, AX₄, AX₃E, AX₂E₂ молекулаларын жинап, бұрыштарды (109,5° → 107,3° → 104,5°) анықта.','H2O'],
+[2,'Практика','Топтық','Шарөзекті модель немесе пластилин мен сіріңке шырпысымен өз тобыңа берілген молекуланы (BeCl₂, BF₃, CH₄, NH₃, H₂O) құрастыр.','NH3'],
+[2,'Жеке жұмыс','Жеке','3D стереохимиялық проекцияны (wedge-dash) дәптерге сына және үздік сызықтармен кескінде.'],
+[2,'Рефлексия','Жеке','«3D Молекула геометриясы»: молекула пішіндеріндегі айырмашылықты қалай түсіндің? Өзіңді 1–10 баллмен бағала.'],
+[2,'Үй тапсырмасы','Жеке','MolView / ChemSpider-де PCl₅ (тригональды бипирамида) және SF₆ (октаэдр) 3D моделін зертте, бұрыштарын жаз.','PCl5'],
+[3,'Қызығушылық','Жеке','«3D Стерео-Микроскопия»: алмаз, тұз, мұз, мыс торларын талда. Алмаз неге қатты, графит неге жұмсақ? Болжамыңды дәптерге жаз.','Diamond'],
+[3,'Зерттеу','Жеке','«3D Кристалл Сканері»: NaCl, алмаз, I₂/H₂O, Cu торларын 360° сканерлеп, әсерлесу күштерін салыстыр; КС: алмаз 4, NaCl 6.','NaCl'],
+[3,'Практика','Жеке','«3D Инженер-Конструктор»: жеке шарөзекті жинақпен немесе Tinkercad-та кристалл элементар ұяшығын құрастыр, бұрыштар мен байланыс ұзындығын тексер.','Diamond'],
+[3,'Жеке жұмыс','Жеке','«3D Изометрия және Аналитикалық Matrix»: изометриялық проекция сыз, «Құрылым — Қасиет» кестесін толтыр.'],
+[3,'Рефлексия','Жеке','«3D Менің даму траекториям»: қай тордың құрылымын толық меңгердің? 1–10 баллмен бағала.'],
+[3,'Үй тапсырмасы','Жеке','SiO₂ және CO₂ торларын 3D зертте: біреуі неге өте қатты, екіншісі неге газ?','SiO2'],
+[4,'Қызығушылық','Фронталды','Мұздағы және су молекулалары арасындағы 3D сутектік көпіршелер анимациясын бақыла. Мұз неге қалқиды? H₂O қайнау t° неге жоғары?','Ice'],
+[4,'Зерттеу','Жеке','PhET / MolView-де H₂O, NH₃, HF арасындағы сутектік байланысты 360° бұрап зертте; F, O, N электротерістігінің әсерін анықта.','H2O'],
+[4,'Практика','Жұптық','Шарөзекті жинақ немесе Tinkercad арқылы 4H₂O арасындағы тетраэдрлік 3D сутектік байланыс торын жұптасып құрастыр.','Ice'],
+[4,'Жеке жұмыс','Жеке','Модельді изометриямен кескінде, сутектік байланысты нүктелі сызықпен (···) белгіле; H₂O, H₂S, H₂Se, H₂Te қайнау t° диаграммасын талда; ДНҚ-дағы сутектік байланыстың маңызын жаз.'],
+[4,'Рефлексия','Жеке','«3D Сутектік көпірше»: жұптық және жеке жұмыс нәтижесін сарала, өзіңді 1–10 баллмен бағала.'],
+[4,'Үй тапсырмасы','Жеке','MolView / ChemSpider-де этанол мен су арасындағы сутектік байланыстың 3D моделін зертте, суретін сал.','H2O']];
+const SK=[
+['ынтымақтастық, топтағы рөлді қабылдау','ион түрлерін түспен кодтау абстрактілі ұғымды (катион, анион, кристал) көзбен байланыстырады'],
+['бақылау, болжам айту, мақсат қою','күрделі 3D құрылымды алғаш тұтас қабылдау; «неге куб?» сұрағы пішін мен себепті байланыстырады'],
+['зерттеу, санау, салыстыру','ойша айналдыру: бір ионның барлық көршісін әр бұрыштан көріп, 3D координациялық санды түсіну'],
+['қолмен құрастыру, топтық жауапкершілік','виртуалдыдан нақты модельге өту; ұяшықты қабаттап жинау арқылы симметрия мен қабаттарды сезіну'],
+['графикалық сауат, схема сызу','3D-ті 2D-ге түсіру (проекция, изометрия) — кеңістіктік визуализацияның ең жоғары деңгейі'],
+['өзін бағалау, рефлексия','кеңістікті елестетуде қай жерде қиналғанын (бұру, көру, салу) анықтау — өзіндік бақылау'],
+['өздігінен зерттеу, аналогия жасау','таныс құрылымды (NaCl) жаңасымен (CaF₂, MgO) салыстыру — кеңістіктік білімді көшіру'],
+['бақылау, салыстыру, болжам','бес молекуланың пішінін қатар көріп, электрон бұлттарының 3D орналасуын байқау'],
+['модельдеу, заңдылық табу','жұп санын өзгертіп, пішін мен бұрыштың өзгеруін көру — себеп-салдарды кеңістікте болжау'],
+['құрастыру, топтық жауапкершілік','тебісуді қолмен сезіну: жұптарды барынша алыс орналастыру; тактильді-кеңістіктік тәжірибе'],
+['графикалық таңбалау, дәлдік','сына мен үздік сызық арқылы тереңдікті жазықта беру; алға-артқа ойша бұру'],
+['өзін бағалау, рефлексия','қай пішінді айыруда қиналғанын сезініп, кеңістіктік түсінігін өзі бағалау'],
+['өздігінен зерттеу, ақпарат іздеу','жаңа геометрияға (5 және 6 жұп) кеңістіктік білімді көшіру: бипирамида, октаэдр'],
+['мұқият бақылау, гипотеза құру','түйіндер мен бос орындарды ішкі микроқұрылымнан көріп, торды «ішінен» қабылдау'],
+['топтау, жіктеу, салыстыру','төрт торды 360° бұрап салыстыру; координациялық санды (4 және 6) 3D-де санау'],
+['жобалау, дәлдік, өз бетімен жұмыс','ұяшықты түйін-түйін жинап, бұрыш пен ұзындықты сақтау — метрикалық кеңістіктік ойлау'],
+['талдау, құрылым мен қасиет байланысын табу','3D құрылымнан қасиетті болжау: кеңістіктік пішіннен қорытынды шығару'],
+['өзін бағалау, даму траекториясын көру','қай тордың кеңістігін меңгергенін және қайсысы қиын екенін сана'],
+['себеп-салдарлы пайымдау, жазбаша дәлелдеу','ұқсас формулалы заттардың (SiO₂, CO₂) әртүрлі 3D торын салыстыру'],
+['проблемалық сұрақ қою, болжам','мұздың ашық тетраэдрлік торы мен тығыздық арасындағы кеңістіктік байланысты көру'],
+['талдау, салыстыру','донор мен акцептордың 3D бағытын көріп, байланыстың бағытталғанын түсіну'],
+['жұптық жұмыс, құрастыру','тетраэдрлік бағытты өздері табу; молекулааралық деңгейдегі кеңістікті елестету'],
+['график оқу, деректі талдау, жазбаша қорытынды','көрінбейтін әсерлесуді (···, δ+/δ−) кеңістікте белгілеу; ДНҚ-дағы 3D рөлін болжау'],
+['өзін бағалау, нәтижені саралау','жұптық және жеке жұмыста кеңістіктік қиындықты тану, келесі қадамды жоспарлау'],
+['өздігінен зерттеу, суреттеу','әртүрлі молекулалар арасындағы сутектік байланысты 3D-де болжап кескіндеу']];
+function ftask(f,b){$$('.tk').forEach(t=>t.style.display=(f=='0'||t.dataset.l==f||t.dataset.f==f)?'':'none');$$('.fl button').forEach(x=>x.classList.toggle('on',x==b))}
+const tasksPg=`<section class=pg id="p-tasks"><div class=hero><h1>Тапсырмалар жүйесі</h1><p>Төрт сабақтағы барлық тапсырма бір жерде: кезеңі, жұмыс түрі және виртуалды құралы көрсетілген.</p></div>
+<div class=card><h3>Тапсырмалар жүйесі дегеніміз не?</h3><p><b>Тапсырмалар жүйесі</b> — оқу мақсатына жету үшін өзара логикалық байланысқан, күрделілігі біртіндеп артатын және сабақтың әр кезеңіне бөлінген тапсырмалар жиынтығы. Жүйедегі әр тапсырма алдыңғысына сүйеніп, келесісіне дайындайды: бақылаудан зерттеуге, зерттеуден құрастыруға, құрастырудан графикалық бекітуге және рефлексияға өтеді.</p><p>Бұл әзірлемеде жүйе <b>3D кеңістіктік ойлауды</b> дамытуға бағытталған: оқушы құрылымды көреді, айналдырады, қолымен немесе виртуалды түрде құрастырады, сосын дәптерде бейнелейді. Жұмыс түрлері: фронталды, топтық, жұптық, жеке.</p>
+<div class=stg><span><b>1 · Бақылау</b>3D модельді көру, проблемалық сұрақ</span><span><b>2 · Зерттеу</b>Симуляцияда бұрап, санау, өлшеу</span><span><b>3 · Құрастыру</b>Шарөзекті жинақ / пластилин / виртуалды зертхана</span><span><b>4 · Бейнелеу</b>Проекция, изометрия, кесте, схема</span><span><b>5 · Рефлексия</b>Өзін бағалау, үй тапсырмасы</span></div>
+<p class=mut>Құрастыру тапсырмаларында нақты құралдың виртуалды баламасы бар: «Виртуалды» батырмасы зертхананы дайын модельмен ашады.</p></div>
+<div class=fl><button class="btn on" onclick="ftask('0',this)">Барлығы</button>${[1,2,3,4].map(n=>`<button onclick="ftask('${n}',this)">Сабақ ${n}</button>`).join('')}${['Фронталды','Топтық','Жұптық','Жеке'].map(f=>`<button onclick="ftask('${f}',this)">${f}</button>`).join('')}</div>
+${TS.map((t,i)=>`<div class=tk data-l="${t[0]}" data-f="${t[2]}"><span class=st>${t[1]}</span><span class=fm>${t[2]}</span><span class=ls>Сабақ ${t[0]}</span><p>${t[3]}</p><p class=sk>🎯 <b>Дағды:</b> ${SK[i][0]}<br>🧠 <b>Кеңістікте ойлау:</b> ${SK[i][1]}</p><a href="#l${t[0]}">Сабақ бетіне →</a>${t[4]?`<button class=btn onclick="openLab('${t[4]}')">Виртуалды: ${MOD[t[4]].n.split(' ')[0]}</button>`:''}</div>`).join('')}</section>`;
+/* ===== сабақ мазмұны ===== */
+const LES=[
+{n:1,t:'Иондық байланыс және оның 3D геометриясы',tools:[PHET,CM,TC,CS],
+goal:'Иондық байланыстың түзілу механизмін электрондық ауысулар арқылы түсіндіру; NaCl, CsCl кристалдық торларының кеңістіктік пішінін, координациялық сандарын және октаэдрлік / кубтық симметриясын 3D моделдеу мен симуляциялар (PhET, ChemMagic, VR/AR) арқылы талдау.',
+org:[`Оқушылар қызыл, сары, жасыл түсті химиялық колба-карточкалар арқылы үш топқа бөлінеді: «Катиондар», «Аниондар», «Кристалдар».`,`Жағымды психологиялық ахуал орнатылды.`],
+orgx:grpBlock(),hook:['NaCl','CaF2'],hq:['Электрон алған және берген атомдар арасында қандай тартылыс күші әрекет етеді?','Натрий хлориді неліктен текше пішінді болады?'],
+mid:[`<p>PhET немесе ChemMagic 3D виртуалды симуляцияларына қосылып, Na⁺ және Cl⁻ иондарының электростатикалық тартылуын 360° бұрай отырып зертте.</p>${checks(['Na⁺ пен Cl⁻ тартылуын 360° бұрып бақыладым','Орталық ионды қоршаған қарама-қарсы иондарды санадым'])}`,
+`<h3>Координациялық сандарды өз бетіңше анықта</h3>${quiz(`<table><tr><th>Кристал</th><th>Қоршаған қарсы иондар саны</th><th>Геометрия</th></tr><tr><td>NaCl</td><td>${inp(6)}</td><td>${sel(['октаэдрлік','кубтық'],'октаэдрлік')}</td></tr><tr><td>CsCl</td><td>${inp(8)}</td><td>${sel(['октаэдрлік','кубтық'],'кубтық')}</td></tr><tr><td>Иондық байланыс бағытталған ба?</td><td>${sel(['иә','жоқ'],'жоқ')}</td><td>Қанығады ма? ${sel(['иә','жоқ'],'жоқ')}</td></tr></table>`)}<p class=mut>Қорытынды: иондық байланыс бағытталмайды және қанықпайды; тордағы кеңістіктік симметрияны түсіну.</p>`],
+grp:phys('3D шарөзекті модельдер жинағы — топтық жұмыс: NaCl кристалының 3D элементар ұяшығын өз қолдарымен құрастыру (тактильді және визуальды-кеңістіктік қабілет)',['NaCl','CsCl']),
+solo:checks(['Құрастырылған 3D модельдің 2D жазықтықтағы проекциясын дәптерге түсірдім','Изометриялық бейнесін салдым','Иондық байланыстың электрондық бұлтшалар арқылы ауысу схемасын сыздым (Na → Na⁺, Cl → Cl⁻)']),
+rf:['3D Көзқарас',[['t','Кері байланыс парағы: 3D моделдеу арқылы нені айқын көрдім?'],['t','Кеңістіктік елестетуде қандай қиындықтар болды?']]],
+hw:`Теориялық білімді қайтала. Tinkercad немесе ChemSpider сайттарында CaF₂ немесе MgO кристалдарының 3D моделдерін зертте, олардың координациялық сандарына дәптерге сипаттама жаз.`,hwk:['CaF2','MgO'],hl:[TC,CS]},
+{n:2,t:'Валентті электрон жұптарының тебісу теориясы (ВЭЖТТ / VSEPR)',tools:[PHET,MV],
+goal:'Электрон жұптарының тебісу принциптері арқылы молекулалардың геометриясын (сызықтық, тригональды жазық, тетраэдр, пирамида, бұрыштық) және валенттік бұрыштардың өзгерісін (180°, 120°, 109,5°, 107,3°, 104,5°) визуалды түрде түсіндіру.',
+org:[`Оқушылар арасында жағымды психологиялық ахуал орнатылады.`],
+hook:['BeCl2','BF3','CH4','NH3','H2O'],hq:['Неліктен CH₄ тетраэдр пішінді, ал H₂O бұрышты болады?','Электрон жұптары өзара қалай тебіседі?'],
+mid:[`<p>PhET «Molecule Shapes» немесе MolView 3D симуляцияларымен жұмыс істе. AX₂, AX₃, AX₄, AX₃E, AX₂E₂ типті молекулаларды жинап, 360° бұрай отырып зертте.</p>${checks(['AX₂, AX₃, AX₄ молекулаларын жинадым','AX₃E және AX₂E₂ молекулаларын жинадым','Бөлінбеген жұп (E) байланысушы жұптарды күштірек итеретінін көрдім'])}<p class=mut>Нәтиже: бөлінбеген жұптар саны артқан сайын бұрыш кішірейеді: CH₄ 109,5° → NH₃ 107,3° → H₂O 104,5°.</p>`,
+`<h3>Молекула типі мен пішінін сәйкестендір</h3>${quiz(`<table><tr><th>Молекула</th><th>Типі</th><th>Пішіні</th><th>Бұрыш (°)</th></tr>${[['BeCl₂','AX₂','сызықтық',180],['BF₃','AX₃','тригональды жазық',120],['CH₄','AX₄','тетраэдр',109.5],['NH₃','AX₃E','пирамида',107.3],['H₂O','AX₂E₂','бұрыштық',104.5]].map(r=>`<tr><td>${r[0]}</td><td>${sel(['AX₂','AX₃','AX₄','AX₃E','AX₂E₂'],r[1])}</td><td>${sel(['сызықтық','тригональды жазық','тетраэдр','пирамида','бұрыштық'],r[2])}</td><td>${inp(r[3])}</td></tr>`).join('')}</table>`)}`],
+grp:phys('3D шарөзекті модельдер немесе пластилин мен сіріңке шырпылары — топтық жұмыс: әр топ өзіне берілген молекуланың 3D пішінін қолымен құрастырады (BeCl₂, BF₃, CH₄, NH₃, H₂O)',['BeCl2','BF3','CH4','NH3','H2O']),
+solo:`<p>Осы молекулалардың 3D стереохимиялық проекцияларын (wedge-dash) дәптерге сына тәрізді және үздік-үздік сызықтармен кескінде. Мысал — CH₄:</p>${svgWedge}${checks(['Сына тәрізді (алға қараған) және үздік (артқа кеткен) байланыстарды сыздым','Электрон бұлттарының көлемдік орналасуын көрсеттім'])}`,
+rf:['3D Молекула геометриясы',[['t','3D моделдеудің арқасында молекула пішіндеріндегі айырмашылықты қалай түсіндім?'],['r','Өзімді бағалаймын (1–10)']]],
+hw:`Теорияны оқумен қатар, MolView немесе ChemSpider арқылы PCl₅ (тригональды бипирамида) және SF₆ (октаэдр) молекулаларының 3D моделдерін зертте, кеңістіктік бұрыштарын дәптерге жаз.`,hwk:['PCl5','SF6'],hl:[MV,CS]},
+{n:3,t:'Кристалдық тор типі және заттардың қасиеттері',tools:[CM,MV,TC,CS],
+goal:'Иондық, атомдық, молекулалық және металдық кристалдық тор типтерін ажырату; түйіндегі бөлшектер сипаты мен физикалық қасиеттер (балқу температурасы, қаттылық, электрөткізгіштік, морттық) арасындағы себеп-салдарлық байланысты 3D геометрия арқылы түсіндіру. Әр оқушы жеке деңгейде жұмыс істейді.',
+org:[`Жағымды жұмыс ахуалы қалыптастырылады.`],
+hook:['Diamond','NaCl','Ice','Cu'],hq:['Неліктен бірдей көміртек атомынан тұратын алмаз аса қатты, ал графит жұмсақ әрі қабатталып ыдырайды?','Кристалдық тордың 3D симметриясы мен түйіндегі бөлшектер сипаты заттың физикалық қасиетін қалай анықтайды?'],
+hl0:'«3D Стерео-Микроскопия»: алмаз, тұз, мұз, мыс торларының ішкі микроқұрылымы. Экрандағы түйіндер мен бос кеңістіктерді жеке талда.',
+mid:[`<h3>«3D Кристалл Сканері» — жеке жұмыс</h3><p>Жеке планшет/ноутбук арқылы ChemMagic / MolView-де иондық (NaCl), атомдық (C-алмаз), молекулалық (I₂, H₂O) және металдық (Cu) торларды 360° бұрап сканерле.</p>${viewer(['NaCl','Diamond','I2','Cu'])}${checks(['Түйіндегі бөлшектерді және әсерлесу күштерін салыстырдым (электростатикалық, коваленттік, Ван-дер-Ваальс, металдық)'])}${quiz(`<table><tr><th>Координациялық сан</th><th></th></tr><tr><td>Алмаз (тетраэдрлік)</td><td>${inp(4)}</td></tr><tr><td>NaCl (октаэдрлік)</td><td>${inp(6)}</td></tr></table>`)}`,
+`<h3>«3D Изометрия және Аналитикалық Matrix»: «Құрылым — Қасиет» кестесі</h3>${quiz(`<table><tr><th>Тор</th><th>Түйіндегі бөлшек</th><th>Балқу t°</th><th>Электрөткізгіштік</th></tr>${[['Иондық (NaCl)','Иондар','жоғары','балқымада/ерітіндіде'],['Атомдық (алмаз)','Атомдар','өте жоғары','жоқ'],['Молекулалық (I₂)','Молекулалар','төмен','жоқ'],['Металдық (Cu)','Катиондар мен электрон газы','жоғары','иә']].map(r=>`<tr><td>${r[0]}</td><td>${sel(['Иондар','Атомдар','Молекулалар','Катиондар мен электрон газы'],r[1])}</td><td>${sel(['өте жоғары','жоғары','төмен'],r[2])}</td><td>${sel(['иә','жоқ','балқымада/ерітіндіде'],r[3])}</td></tr>`).join('')}</table>`)}`],
+grp:phys('«3D Инженер-Конструктор»: әр оқушы жеке 3D шарөзекті модельдер жинағымен немесе Tinkercad-та өз нұсқасы бойынша кристалдық тордың элементар ұяшығын құрастырады, бұрыштар мен байланыс ұзындықтарының сақталуын тексереді',['NaCl','Diamond','Cu','I2']),
+solo:checks(['Өзім құрастырған 3D модельдің изометриялық проекциясын дәптерге дербес сыздым','«Құрылым — Қасиет» кестесін толтырып, қасиетті кеңістіктік пішінге сүйеніп болжадым']),
+rf:['3D Менің даму траекториям',[['c','Қай кристалдық тордың 3D құрылымын толық меңгердім?',['Иондық','Атомдық','Молекулалық','Металдық']],['r','Өзімді бағалаймын (1–10)']]],
+hw:`SiO₂ және CO₂ кристалдық торларын MolView немесе ChemSpider арқылы 3D форматта зертте. Біреуінің өте қатты, екіншісінің газ болу себебін 3D құрылым тұрғысынан дәптерге жаз.`,hwk:['SiO2','CO2'],hl:[MV,CS]},
+{n:4,t:'Сутектік байланыс',tools:[PHET,MV,TC,CS],
+goal:'Сутектік байланыстың түзілу механизмін (F, O, N мен сутек арасындағы донор-акцепторлық әсерлесу) ашу; оның қайнау температурасына, тығыздыққа, ерігіштікке әсерін талдау; ДНҚ мен ақуыз спиральдарындағы 3D сутектік көпіршелердің рөлін болжау.',
+org:[`Жағымды ахуал қалыптастырылады.`],
+hook:['Ice','H2O'],hq:['Неліктен мұз су бетінде қалқып жүреді?','Судың қайнау температурасы ұқсас қосылыстармен (H₂S, H₂Se) салыстырғанда неге тым жоғары?'],
+mid:[`<p>PhET және MolView 3D симуляциялары арқылы H₂O, NH₃ және HF молекулалары арасындағы сутектік байланыстарды 360° бұрап зертте. F, O, N электротерістігі байланыстың беріктігі мен бағытталуына қалай әсер ететінін анықта.</p>${checks(['H₂O, NH₃, HF арасындағы сутектік байланыстарды бақыладым','Электротерістіктің әсерін анықтадым'])}${quiz(`<table><tr><th>Молекула</th><th>Сутектік байланыс түзе ме?</th></tr>${[['H₂O','иә'],['NH₃','иә'],['HF','иә'],['CH₄','жоқ'],['H₂S','жоқ']].map(r=>`<tr><td>${r[0]}</td><td>${sel(['иә','жоқ'],r[1])}</td></tr>`).join('')}</table>`)}`,
+`<h3>Қайнау температурасының график-диаграммасын талда</h3>${bars}<p class=mut>Тек судың қайнау температурасы неге жоғары? Жеке жазып, ДНҚ-ның екі тізбегіндегі азотты негіздер арасындағы сутектік байланыстың 3D кеңістіктік маңызын сипатта.</p><textarea placeholder="Талдауың…"></textarea>`],
+grp:phys('3D шарөзекті модельдер жинағы немесе Tinkercad — жұптық жұмыс: 4 су молекуласының (4H₂O) арасындағы тетраэдрлік 3D сутектік байланыс торын құрастыру',['Ice','H2O']),
+solo:checks(['Модельді дәптерге 3D изометриялық проекцияда кескіндедім','Сутектік байланыстарды нүктелі сызықпен (···) белгіледім','Электрон тығыздығының ығысуын (δ+ / δ−) көрсеттім']),
+rf:['3D Сутектік көпірше',[['t','Жұптық және жеке жұмыс нәтижелерін саралау: не түсіндім?'],['r','Өзімді бағалаймын (1–10)']]],
+hw:`MolView немесе ChemSpider онлайн 3D сайты арқылы спирттер (этанол) мен су арасындағы сутектік байланыстың 3D моделін зертте, дәптерге суретін сал.`,hwk:['H2O'],hl:[MV,CS]}
+];
+const lesson=L=>`<section class=pg id="p-l${L.n}"><div class=hero><span class=badge>Сабақ ${L.n}</span><h1>${L.t}</h1><p><b>Мақсаты:</b> ${L.goal}</p><div class=chips>${L.tools.map(([a,u])=>lk(a,u)).join('')}</div><div class=prog><i id="pr${L.n}"></i></div><small id="pt${L.n}"></small></div>
+<div class=step><h2><b>1</b>Ұйымдастыру кезеңі</h2>${checks(L.org)}${L.orgx||''}</div>
+<div class=step><h2><b>2</b>Қызығушылықты ояту</h2><p class=mut>${L.hl0||'Интерактивті тақтада ЖИ көмегімен генерацияланған 3D модельдер көрсетіледі.'}</p>${viewer(L.hook)}${qs(L.hq)}<div class=q><p>🎯 <b>Сабақтың тақырыбы мен мақсатын өз сөзіңмен тұжырымда</b></p><textarea></textarea></div></div>
+<div class=step><h2><b>3</b>Сабақтың ортасы</h2>${L.mid.join('')}<h3>Топтық / жұптық жұмыс</h3>${L.grp}<h3>Жеке жұмыс</h3>${L.solo}</div>
+<div class=step><h2><b>4</b>Рефлексия</h2>${refl(...L.rf)}</div>
+<div class=step><h2><b>5</b>Үй тапсырмасы</h2><p>${L.hw}</p>${lnk(L.hl)}<div class=phys>🧪 Виртуалды зертханада алдын ала көруге болады: ${L.hwk.map(k=>`<button class=btn onclick="openLab('${k}')">${MOD[k].n}</button>`).join('')}</div><textarea placeholder="Үй тапсырмасының жауабы / жазбалар…"></textarea></div></section>`;
+const home=`<section class="pg on" id="p-home"><div class=hero><h1>Химиялық байланыс типтері</h1><p>Мұғалімдерге арналған 3D сабақ әзірлемелері: әр сабақтың кезеңдері, сұрақтары, тапсырмалары, рефлексиясы және үй тапсырмасы бір бетте. Виртуалды 3D зертханада молекула мен кристал құрастыруға болады.</p></div>
+<div class=grid>${LES.map(L=>`<div class=card><span class=badge style="background:var(--ac);color:#fff">Сабақ ${L.n}</span><h3>${L.t}</h3><a class=go href="#l${L.n}">Сабаққа өту →</a></div>`).join('')}<div class=card style="border-color:var(--ac2)"><span class=badge style="background:var(--ac2);color:#fff">Жүйе</span><h3>Тапсырмалар жүйесі</h3><p class=mut>Анықтама және барлық сабақтың тапсырмалары.</p><a class=go href="#tasks">Ашу →</a></div><div class=card style="border-color:var(--ac2)"><span class=badge style="background:var(--ac2);color:#fff">Зертхана</span><h3>Виртуалды 3D зертхана</h3><p class=mut>Шарөзекті модельдер жинағы мен пластилиннің виртуалды баламасы.</p><a class=go href="#lab">Ашу →</a></div></div>
+<div class=card><h3>Сабақта қолданылатын сайттар</h3><div class=chips>${lnk([PHET,MV,CM,TC,CS])}</div><p class=mut>PhET — Molecule Shapes симуляциясы; MolView және ChemSpider — молекулалардың 3D моделдері; Tinkercad — 3D моделдеу; ChemMagic — виртуалды симуляциялар.</p></div>
+<div class=card><h3>Мұғалімге кеңес</h3><p>Әр сабақта <b>нақты құрал</b> (шарөзекті модельдер жинағы, пластилин, сіріңке шырпысы) көрсетілген. Негізгі әзірлемеде осы құрал қолданылады, бірақ оның <b>виртуалды нұсқасын</b> оқушыларға ұсынуға болады — сабақ ішіндегі жасыл қорапшадағы батырмалар зертхананы дайын модельмен ашады.</p></div></section>`;
+const lab=`<section class=pg id="p-lab"><div class=hero><h1>Виртуалды 3D зертхана</h1><p>Шарөзекті модельдер жинағының виртуалды нұсқасы: атомдарды таңда, қос, байланыстыр, сүйреп бұра. Жаңа атом тебісу принципіне сай көршілерден барынша алыс орналасады.</p></div>
+<div class=lab><div><canvas id=labcv></canvas><div id=info></div></div><div class=card><h3>1. Элемент</h3><div class=pal id=pal></div><label>Байланыс түрі: <select id=bt><option value=1>жай</option><option value=2>қос</option><option value=h>сутектік (···)</option></select></label><h3>2. Әрекет</h3><div class=row><button class=btn onclick=addAtom()>＋ Атом қосу</button><button class=btn onclick=bond()>🔗 Байланыстыру</button><button onclick=undo() class=tb>↶ Жою</button><button onclick=clr() class=tb>🗑 Тазалау</button><button onclick="LV.auto=!LV.auto" class=tb>⏯ Айналу</button></div><p class=mut>Атомды түртіп таңда (2-ге дейін). Таңдалған атомға жаңа атом қосылады; екі атомды «Байланыстыру» қосады.</p><h3>3. Дайын модельдер</h3><div class=pre id=pre></div></div></div>
+<div class=card><h3>Тапсырма идеялары</h3><p>• H₂O жина: ∠ H–O–H неше градус? • NH₃ пен CH₄ бұрыштарын салыстыр. • NaCl, CsCl-де орталық ионды санап, КС тап. • Ice моделіндегі сутектік байланыстарды (көк сызықша) санап шық.</p></div></section>`;
+$('#app').innerHTML=home+LES.map(lesson).join('')+lab+tasksPg;
+$('#nav').innerHTML=[['home','Басты'],...LES.map(L=>['l'+L.n,'Сабақ '+L.n]),['lab','🧪 Зертхана'],['tasks','📋 Тапсырмалар жүйесі']].map(([h,t])=>`<a href="#${h}" data-h=${h}>${t}</a>`).join('');
+$$('.vw canvas').forEach(c=>new V(c,MOD[c.dataset.k].m()));
+/* ===== зертхана ===== */
+let LV,cur='O';
+LV=new V($('#labcv'),{A:[],B:[],r:.7});LV.lab=1;
+$('#pal').innerHTML=['H','C','N','O','F','Cl','Na','S','P','B','Be','Cs','I','Cu','Si','Ca','Mg'].map(e=>`<button class="${e==cur?'on':''}" onclick="cur='${e}';$$('#pal button').forEach(b=>b.classList.toggle('on',b.textContent=='${e}'))">${e}</button>`).join('');
+$('#pre').innerHTML=Object.keys(MOD).map(k=>`<button onclick="loadM('${k}')">${MOD[k].n.split(' ')[0]}</button>`).join('');
+function info(t){const m=LV.m,c={};m.A.forEach(a=>{if(a[0]!='LP')c[a[0]]=(c[a[0]]||0)+1});const sb=n=>n>1?String(n).replace(/\d/g,d=>'₀₁₂₃₄₅₆₇₈₉'[d]):'';let s=Object.keys(c).map(k=>k+sb(c[k])).join('')||'—',a='';
+if(LV.sel.length==1){const i=LV.sel[0],nb=m.B.filter(b=>b[2]!='e'&&b[2]!='h'&&(b[0]==i||b[1]==i)).map(b=>b[0]==i?b[1]:b[0]);for(let x=0;x<nb.length&&a.split('<br>').length<4;x++)for(let y=x+1;y<nb.length;y++){const u=m.A[nb[x]],v=m.A[nb[y]],o=m.A[i],p=[1,2,3].map(k=>u[k]-o[k]),q=[1,2,3].map(k=>v[k]-o[k]),dg=Math.acos((p[0]*q[0]+p[1]*q[1]+p[2]*q[2])/Math.hypot(...p)/Math.hypot(...q))*180/Math.PI;a+=`<br>∠ ${u[0]}–${o[0]}–${v[0]} = <b>${dg.toFixed(1)}°</b>`;if(a.split('<br>').length>3)break}if(nb.length>1&&!a)a=''}
+$('#info').innerHTML=`<b>Формула:</b> ${s} · атом: ${m.A.filter(a=>a[0]!='LP').length}${a?'<br><b>Бұрыш:</b>'+a:''}${t?'<br>'+t:''}`}
+LV.onsel=()=>info();info();
+function loadM(k){LV.m=MOD[k].m();LV.sel=[];info(`<b>${MOD[k].n}:</b> ${MOD[k].d}`)}
+function openLab(k){location.hash='lab';setTimeout(()=>{loadM(k);scrollTo(0,0)},50)}
+function addAtom(){const m=LV.m,A=m.A;let p=[0,0,0],par=-1;if(A.length){par=LV.sel.length?LV.sel[0]:A.length-1;const c=A[par];let bs=-1;for(let n=0;n<60;n++){const d=nv([Math.random()-.5,Math.random()-.5,Math.random()-.5]),q=[c[1]+d[0]*1.5,c[2]+d[1]*1.5,c[3]+d[2]*1.5],s=Math.min(...A.map(a=>Math.hypot(a[1]-q[0],a[2]-q[1],a[3]-q[2])));if(s>bs){bs=s;p=q}}}
+A.push([cur,...p]);if(par>=0){const t=$('#bt').value;m.B.push([par,A.length-1,t=='h'?'h':+t])}LV.sel=[A.length-1];info()}
+function bond(){if(LV.sel.length==2){const t=$('#bt').value;LV.m.B.push([LV.sel[0],LV.sel[1],t=='h'?'h':+t]);info()}}
+function undo(){const m=LV.m,n=m.A.length-1;if(n<0)return;m.A.pop();m.B=m.B.filter(b=>b[0]!=n&&b[1]!=n);LV.sel=[];info()}
+function clr(){LV.m={A:[],B:[],r:.7};LV.sel=[];info()}
+/* ===== маршрут және прогресс ===== */
+function route(){const h=location.hash.slice(1)||'home';$$('.pg').forEach(p=>p.classList.toggle('on',p.id=='p-'+h));$$('nav a').forEach(a=>a.classList.toggle('on',a.dataset.h==h));if(!arguments[0])scrollTo(0,0)}
+addEventListener('hashchange',()=>route());route(1);
+function prog(){LES.forEach(L=>{const c=$$('#p-l'+L.n+' input[type=checkbox]');const k=c.filter(x=>x.checked).length;$('#pr'+L.n).style.width=(c.length?k/c.length*100:0)+'%';$('#pt'+L.n).textContent=`Орындалған тапсырма: ${k}/${c.length}`})}
+document.addEventListener('change',e=>{if(e.target.type=='checkbox')prog()});prog();
+</script></body></html>
